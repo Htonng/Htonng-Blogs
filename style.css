@@ -99,6 +99,9 @@ body {
     gap: 50px;
     position: relative;
     z-index: 10; /* 确保内容在背景文字之上 */
+    /* 向右偏移以实现左右平衡（仅影响内容，不影响背景大字） */
+    transform: translateX(40px);
+    transition: transform 0.35s ease;
 }
 
 /* --- 左侧：个人头像区域 --- */
@@ -150,7 +153,7 @@ body {
 /* --- 右侧：大文字背景与文案 --- */
 .text-section {
     z-index: 1; /* 确保文字在背景字之上 */
-    flex: 1.5; /* 占据更多空间 */
+    flex: 1; /* 占据更多空间 */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -161,11 +164,11 @@ body {
 /* 巨大的英文装饰字 */
 .bg-words {
     position: absolute;
-    top: -90%;
-    right: -50px; /* 稍微偏右，制造层次感 */
+    top: 0%;
+    left: 0; /* 固定左对齐，始终贴着网页左侧 */
     font-size: 12rem; /* 巨大字体 */
     font-weight: 900;
-    color: #F5F5F7; /* 极浅的灰色，几乎透明但可见 */
+    color: #f0f0f0; /* 极浅的灰色，几乎透明但可见 */
     line-height: 0.9;
     pointer-events: none; /* 防止阻挡点击 */
     white-space: nowrap;
@@ -178,7 +181,7 @@ body {
     flex-direction: column;
     gap: -80px; 
     transition: opacity 0.8s ease, transform 0.8s ease;
-    transform: translateX(24px);
+    transform: translateX(-24px); /* 从左侧略微滑入 */
 }
 
 /* 进入视口时的状态 */
@@ -247,6 +250,7 @@ body {
         flex-direction: column-reverse; /* 手机上头像在下，或者根据喜好调整顺序 */
         text-align: center;
         justify-content: center;
+        transform: none; /* 在移动端取消偏移 */
     }
 
     .profile-section {
@@ -591,6 +595,7 @@ body {
         justify-content: center;
         gap: 20px;
         padding: 30px 20px;
+        transform: none; /* 在窄屏/中等屏幕取消偏移 */
     }
 
     .profile-section { align-items: center; width: 100%; order: -1; }
