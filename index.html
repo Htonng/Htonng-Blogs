@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Htonng | Developer & Composer</title>
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">&lt;Htonng /&gt;</div>
+        <!-- Mobile menu toggle -->
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#about">关于我</a></li>
+            <li><a href="#music">音乐创作</a></li>
+            <li><a href="#servers">Minecraft服务器</a></li>
+            <!-- 修改为 QQ 群链接 -->
+            <li><a href="https://qm.qq.com/q/w76rIvt0Pu" target="_blank" class="btn-contact"><i class="fas fa-user-plus"></i> 加入社群</a></li>
+        </ul>
+    </nav>
+
+    <!-- 遮罩（移动菜单打开时显示） -->
+    <div class="nav-overlay" aria-hidden="true"></div>
+
+    <!-- Hero 区域 - 重新排版版 -->
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <!-- 左侧：头像与核心介绍 -->
+            <div class="profile-section">
+                <div class="avatar-container">
+                    <img src="https://s2.loli.net/2025/09/14/jrRMS3t17vnyXBe.jpg" alt="Htonng Avatar" class="hero-avatar">
+                </div>
+                <h1 class="profile-name">&lt;Htonng /&gt;</h1>
+                <p class="profile-tagline">Developer | Composer | Tinkerer</p>
+            </div>
+
+            <!-- 右侧：动态背景文字与行动呼吁 -->
+            <div class="text-section">
+                <!-- 巨大的英文装饰字 (使用 CSS 控制透明度) -->
+                <div class="bg-words">
+                    <span class="word big-word" style="--i:1;">CODECODE</span>
+                    <span class="word big-word" style="--i:2;">MUSICMUSI</span>
+                    <span class="word big-word" style="--i:3;">HARDWARE</span>
+                    <span class="word big-word" style="--i:4;">SERVERSER</span>
+                    <span class="word big-word" style="--i:5;">AUTOMATIC</span>
+                </div>
+
+                <h1 class="typing-text">你好，我是 Htonng</h1>
+                <p class="hero-desc">
+                    17 岁高中生，喜欢捣鼓电脑软硬件，在 FL Studio 作曲<br>
+                    在 Minecraft 服务器构建自动化世界。
+                </p>
+
+                <div class="cta-group">
+                    <a href="#about" class="btn btn-primary"><i class="fas fa-user-astronaut"></i> 关于我</a>
+                    <a href="#servers" class="btn btn-secondary"><i class="fab fa-minecraft"></i> 加入服务器</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- 关于我 & 技能 -->
+    <section id="about" class="container section">
+        <h2><i class="fas fa-user-astronaut"></i> 关于我</h2>
+        <div class="cards-grid">
+            <div class="card skill-card">
+                <i class="fab fa-linux"></i>
+                <h3>Linux & System</h3>
+                <p>热衷于探索各种 Linux 发行版，喜欢捣鼓电脑硬件，享受命令行带来的掌控感。</p>
+            </div>
+            <div class="card skill-card">
+                <i class="fas fa-code"></i>
+                <h3>Programming</h3>
+                <p>正在探索多种编程语言。从 Python 到 Web 开发，代码是我表达逻辑的语言。</p>
+            </div>
+            <div class="card skill-card">
+                <i class="fas fa-cube"></i>
+                <h3>Minecraft Server</h3>
+                <p>我的世界服务器管理员。目前运营着生电和机械动力服，欢迎来我的服务器做建筑或红石。</p>
+            </div>
+            <div class="card skill-card">
+                <i class="fas fa-computer"></i>
+                <h3>Hardware</h3>
+                <p>热衷于探索各种硬件设备，喜欢拆解和组装电脑，享受从零开始组装硬件的乐趣。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 音乐作品 (FL Studio) -->
+    <section id="music" class="container section bg-dark">
+        <h2><i class="fas fa-compact-disc"></i> FL Studio 创作</h2>
+        <p style="text-align: center; color: #86868B;">用声音构建世界，记录我的情绪与灵感。</p>
+        
+        <!-- 修改后的音乐列表 -->
+        <div class="music-list">
+            <!-- 曲目 1 -->
+            <div class="song-item">
+                <div class="track-info">
+                    <span class="status">🎼 DEMO</span>
+                    <h3>⭐STARS</h3>
+                    <p style="color: #86868B; font-size: 0.9em;">Lo-Fi / jpop • 02:15</p>
+                    <!-- 文字描述 -->
+                    <div class="track-desc">
+                        <i class="fas fa-music"></i> 灵感来源于深夜在敲完代码，抬头仰望星空时，看到的无尽星河。希望这首曲子能带给你宁静与思考。在jpop的律动中，加入了Lo-Fi的元素，让旋律更贴近内心的感受。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 曲目 2 -->
+            <div class="song-item">
+                <div class="track-info">
+                    <span class="status">🎼 DEMO</span>
+                    <h3>Spring</h3>
+                    <p style="color: #86868B; font-size: 0.9em;">交响 • 1:23</p>
+                    <!-- 文字描述 -->
+                    <div class="track-desc">
+                        <i class="fas fa-cogs"></i> 这首曲子是我在春天的早晨创作的，灵感来自于早晨鸟儿的声音。我尝试将自然的旋律与灵动的节奏结合，创造出一种独特的交响体验。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Minecraft 服务器 -->
+    <section id="servers" class="container section">
+        <h2><i class="fas fa-cubes"></i> 我的世界服务器 (Minecraft)</h2>
+
+        <!-- 修改为 QQ 群链接 -->
+        <div class="server-card">
+            <div class="server-info">
+                <h3><i class="fas fa-bolt"></i> 生电服 (Redstone Tech)</h3>
+                <p>专注于红石科技、全自动工厂和复杂的自动化系统。<br>👉 <strong>加入 QQ 群：826673617</strong></p>
+            </div>
+            <!-- 替换为跳转链接 -->
+            <a href="https://qm.qq.com/q/w76rIvt0Pu" target="_blank" class="btn btn-join">加入 QQ 群</a>
+        </div>
+
+        <!-- 修改为 QQ 群链接 -->
+        <div class="server-card">
+            <div class="server-info">
+                <h3><i class="fas fa-gears"></i> 机械动力服 (Create)</h3>
+                <p>专注于齿轮、活塞、自动化运输和大型机器建设。<br>👉 <strong>加入 QQ 群：826673617</strong></p>
+            </div>
+             <!-- 替换为跳转链接 -->
+            <a href="https://qm.qq.com/q/w76rIvt0Pu" target="_blank" class="btn btn-join">加入 QQ 群</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>&copy; 2026 Htonng. All Rights Reserved.</p>
+        <div class="socials">
+            <a href="https://github.com/Xuanfish"><i class="fab fa-github"></i></a>
+            <a href="https://space.bilibili.com/634850101?spm_id_from=333.1007.0.0"><i class="fab fa-bilibili"></i></a>
+        </div>
+    </footer>
+
+    <!-- 脚本引用 -->
+    <script src="script.js"></script>
+</body>
+</html>

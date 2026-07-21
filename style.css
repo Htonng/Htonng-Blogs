@@ -1,0 +1,611 @@
+/* 
+   APPLE MINIMALIST THEME 
+   Colors: #F5F5F7 (bg), #FFFFFF (card), #1D1D1F (text)
+*/
+
+/* 全局重置与字体 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Apple System Font Stack - 细体优先 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #F5F5F7; /* Apple 浅灰背景 */
+    color: #1D1D1F; /* Apple 深空灰文字 */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Mac 字体平滑渲染 */
+}
+
+/* 导航栏 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: rgba(245, 245, 247, 0.8); /* 半透明背景 */
+    backdrop-filter: blur(20px); /* 毛玻璃效果 */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* 极细边框 */
+}
+
+/* 在非移动端默认隐藏汉堡按钮（移动端在 media query 中显示） */
+.nav-toggle {
+    display: none;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1D1D1F;
+    background-color: transparent;
+    padding: 8px 14px;
+    border-radius: 20px; /* Pill shape */
+    transition: background 0.3s;
+}
+
+.logo:hover {
+    background-color: rgba(29, 29, 31, 0.05);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #424245; /* 深灰色链接 */
+    font-size: 15px;
+    transition: color 0.3s, font-weight 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007AFF; /* Apple Blue */
+    font-weight: 600;
+}
+
+.btn-contact {
+    background-color: #1D1D1F !important;
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
+
+/* Hero 区域 - 重新设计版 */
+.hero {
+    /* 保持白色背景，突出内容 */
+    background-color: #fff; 
+    min-height: 90vh; /* 占据大部分屏幕高度 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* 防止背景文字溢出 */
+    padding: 60px 20px;
+}
+
+.hero-content {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    position: relative;
+    z-index: 10; /* 确保内容在背景文字之上 */
+}
+
+/* --- 左侧：个人头像区域 --- */
+.profile-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    z-index: 10; /* 确保头像在背景文字之上 */
+}
+
+.avatar-container {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.hero-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px; /* Apple 风格的圆角头像 */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* 深度阴影，突出立体感 */
+    transition: transform 0.5s ease;
+}
+
+.hero-avatar:hover {
+    transform: scale(1.05) rotate(3deg); /* 悬停时轻微放大并旋转 */
+}
+
+.profile-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1D1D1F;
+    margin-bottom: 8px;
+    letter-spacing: -0.03em;
+}
+
+.profile-tagline {
+    color: #86868B;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+/* --- 右侧：大文字背景与文案 --- */
+.text-section {
+    z-index: 1; /* 确保文字在背景字之上 */
+    flex: 1.5; /* 占据更多空间 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    
+}
+
+/* 巨大的英文装饰字 */
+.bg-words {
+    position: absolute;
+    top: -90%;
+    right: -50px; /* 稍微偏右，制造层次感 */
+    font-size: 12rem; /* 巨大字体 */
+    font-weight: 900;
+    color: #F5F5F7; /* 极浅的灰色，几乎透明但可见 */
+    line-height: 0.9;
+    pointer-events: none; /* 防止阻挡点击 */
+    white-space: nowrap;
+    opacity: 0; /* 初始隐藏，使用 IntersectionObserver 触发淡入 */
+    font-family: 'Arial Black', sans-serif; /* 使用粗体英文字体 */
+    z-index: 0; /* 确保在内容下方 */
+    
+    /* 错开排列，形成视觉节奏 */
+    display: flex;
+    flex-direction: column;
+    gap: -80px; 
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateX(24px);
+}
+
+/* 进入视口时的状态 */
+.bg-words.in-view {
+    opacity: 0.6;
+    transform: translateX(0);
+}
+
+    .cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1.25em;
+        background-color: #1D1D1F;
+        animation: blink 1s step-end infinite;
+        vertical-align: middle;
+        margin-left: 6px;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    .big-word {
+    transition: color 0.3s ease, transform 0.5s ease;
+}
+
+
+
+.typing-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1D1D1F;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: visible;
+    z-index: 10; /* 确保在背景字之上 */
+}
+
+.main-title {
+    font-size: 3.5rem; /* 更大的标题 */
+    line-height: 1.1;
+    color: #1D1D1F;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.hero-desc {
+    font-size: 1.2rem;
+    color: #424245; /* 深灰色 */
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 90%;
+    z-index: 10; /* 确保在背景字之上 */
+}
+
+.cta-group {
+    display: flex;
+    gap: 15px;
+}
+
+/* --- 响应式适配 (手机端) --- */
+@media (max-width: 700px) {
+    .hero-content {
+        flex-direction: column-reverse; /* 手机上头像在下，或者根据喜好调整顺序 */
+        text-align: center;
+        justify-content: center;
+    }
+
+    .profile-section {
+        align-items: center;
+        width: 100%;
+    }
+
+    .text-section {
+        width: 100%;
+    }
+
+    .bg-words {
+        display: none; /* 手机上隐藏巨大的背景字，避免遮挡 */
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-avatar {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+
+
+/* 按钮样式 */
+.btn {
+    padding: 12px 28px;
+    border-radius: 30px; /* 大圆角 */
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    z-index: 10; /* 确保按钮在背景字之上 */
+}
+
+.btn-primary {
+    background-color: #007AFF; /* Apple Blue */
+    color: white;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1.5px solid #D2D2D7;
+    color: #1D1D1F;
+}
+
+.btn-join {
+    background-color: #34C759; /* Apple Green */
+    color: white;
+    text-decoration: none !important;
+    display: inline-block;
+}
+
+.btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 通用容器 */
+.container {
+    max-width: 980px; /* 稍微窄一点，更像 App 界面 */
+    margin: 0 auto;
+    padding: 100px 20px;
+}
+
+.section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: #1D1D1F;
+    letter-spacing: -0.01em;
+}
+
+/* 技能卡片网格 */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px; /* 更大的间距 */
+}
+
+.card {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 24px; /* Apple Card Radius */
+    text-align: left; /* 左对齐更专业 */
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* Apple Style Shadow */
+}
+
+.card i {
+    font-size: 2.5rem;
+    color: #007AFF; /* 图标颜色统一为蓝色，或者根据内容换色 */
+    margin-bottom: 20px;
+    display: block;
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #1D1D1F;
+}
+
+.card p {
+    color: #86868B;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* 音乐列表 - Apple Minimalist Style */
+.bg-dark {
+    background-color: #fff !important; /* 保持白色背景 */
+    border-radius: 20px;
+}
+
+.music-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px; /* 限制最大宽度，更像手机 APP 界面 */
+    margin: 0 auto;
+}
+
+.song-item {
+    background-color: #F5F5F7; /* Apple 浅灰背景 */
+    padding: 24px;
+    
+    /* 🔥 新增：圆角与阴影 */
+    border-radius: 20px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02); /* 轻微投影 */
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease;
+}
+
+/* 🔥 新增：悬停浮动效果 */
+.song-item:hover {
+    transform: translateY(-4px) scale(1.01); /* 向上浮起并轻微放大 */
+    background-color: #fff; /* 悬停变白 */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08); /* 阴影加深 */
+}
+
+.track-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.status {
+    font-weight: 600;
+    margin-right: 0; /* 移除右边距，因为下面是描述 */
+    color: #1D1D1F;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.song-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+    color: #1D1D1F;
+    font-weight: 600;
+}
+
+/* 修改 p 标签样式，增加描述类 */
+.song-item > div > p { /* 针对第一层的 p (时长) */
+    color: #86868B;
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+/* 🔥 新增：创作灵感描述的样式 */
+.track-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #424245; /* 稍深一点的灰，增加可读性 */
+    border-left: 3px solid #E8E8ED; /* 左侧装饰线 */
+    padding-left: 10px;
+}
+
+/* 移除不再需要的播放按钮样式 */
+.play-btn {
+    display: none; 
+}
+
+
+/* 通用首次可见卡片动画 */
+.reveal-card {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card.reveal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.song-item.reveal-card:hover,
+.server-card.reveal-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    background-color: #fff;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+/* Minecraft 服务器卡片 */
+.server-card {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 24px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.server-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    background-color: #fff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.server-info h3 {
+    color: #1D1D1F;
+    margin-bottom: 5px;
+    font-size: 1.4rem;
+}
+
+.server-info p {
+    color: #86868B;
+    margin-top: 0;
+    font-size: 0.95rem;
+}
+
+/* 页脚 */
+.footer {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #F5F5F7; /* 与 body 一致或略深 */
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.socials a {
+    color: #86868B;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+.socials a:hover {
+    color: #1D1D1F;
+}
+
+/* 响应式适配 */
+@media (max-width: 900px) {
+    /* Navbar mobile */
+    .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        font-size: 1.25rem;
+        color: #1D1D1F;
+        cursor: pointer;
+        margin-left: 12px;
+    }
+
+    /* Mobile animated menu: use max-height to animate open/close */
+    .nav-links {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        gap: 0;
+        padding: 0 20px 0 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        border-bottom: 1px solid rgba(0,0,0,0.04);
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 380ms cubic-bezier(.2,.8,.2,1), padding 260ms ease;
+    }
+
+    .nav-links li { padding: 12px 0; }
+    .nav-links li a { display: block; }
+
+    .navbar.open .nav-links {
+        max-height: 480px; /* 增大以适配更多菜单项 */
+        padding: 12px 20px 18px 20px;
+    }
+
+    /* 遮罩层 */
+    .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.36);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 260ms ease;
+        z-index: 900; /* 在导航下方但覆盖页面内容 */
+    }
+
+    /* 当菜单打开/页面锁定时显示遮罩 */
+    body.nav-open .nav-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* 禁止页面滚动（当菜单打开时通过 body.nav-open 设置） */
+    body.nav-open { overflow: hidden; }
+
+    /* Hero adjustments: avatar 在标题上方，隐藏 profile-name/profile-tagline */
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 30px 20px;
+    }
+
+    .profile-section { align-items: center; width: 100%; order: -1; }
+    .avatar-container { margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+    .hero-avatar { width: 140px; height: 140px; }
+    .profile-name, .profile-tagline { display: none; }
+
+    /* 隐藏大字避免占用过多空间 */
+    .bg-words { display: none; }
+
+    .typing-text { font-size: 1.8rem; }
+
+    .cta-group { flex-direction: column; gap: 12px; }
+    .btn { width: 100%; justify-content: center; }
+
+    .server-card { flex-direction: column; text-align: center; align-items: flex-start; }
+    .btn-join { width: 100%; justify-content: center; margin-top: 10px;}
+}
