@@ -12,7 +12,7 @@
 
 body {
     /* Apple System Font Stack - 细体优先 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Google Sans', "Noto Sans SC", Helvetica, Arial, sans-serif;
     background-color: #F5F5F7; /* Apple 浅灰背景 */
     color: #1D1D1F; /* Apple 深空灰文字 */
     line-height: 1.6;
@@ -135,6 +135,7 @@ body {
 }
 
 .profile-name {
+    font-family: 'Google Sans', sans-serif; /* 使用 Google Sans 字体，类似 Apple 风格 */
     font-size: 2.5rem;
     font-weight: 700;
     color: #1D1D1F;
@@ -143,6 +144,7 @@ body {
 }
 
 .profile-tagline {
+    font-family: 'Google Sans', sans-serif; /* 使用 Google Sans 字体，类似 Apple 风格 */
     color: #86868B;
     font-size: 1rem;
     text-transform: uppercase;
@@ -152,6 +154,7 @@ body {
 
 /* --- 右侧：大文字背景与文案 --- */
 .text-section {
+    font-family: 'Google Sans',"Noto Sans SC", sans-serif; /* 使用 Arimo 字体，类似 Apple 风格 */
     z-index: 1; /* 确保文字在背景字之上 */
     flex: 1; /* 占据更多空间 */
     display: flex;
@@ -175,7 +178,6 @@ body {
     opacity: 0; /* 初始隐藏，使用 IntersectionObserver 触发淡入 */
     font-family: 'Arial Black', sans-serif; /* 使用粗体英文字体 */
     z-index: 0; /* 确保在内容下方 */
-    
     /* 错开排列，形成视觉节奏 */
     display: flex;
     flex-direction: column;
@@ -245,7 +247,7 @@ body {
 }
 
 /* --- 响应式适配 (手机端) --- */
-@media (max-width: 700px) {
+@media (max-width: 900px) {
     .hero-content {
         flex-direction: column-reverse; /* 手机上头像在下，或者根据喜好调整顺序 */
         text-align: center;
@@ -262,9 +264,9 @@ body {
         width: 100%;
     }
 
-    .bg-words {
-        display: none; /* 手机上隐藏巨大的背景字，避免遮挡 */
-    }
+    /* .bg-words {
+        display: none;
+    } */
 
     .main-title {
         font-size: 2.5rem;
@@ -331,6 +333,14 @@ body {
     letter-spacing: -0.01em;
 }
 
+.section-icon {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
 /* 技能卡片网格 */
 .cards-grid {
     display: grid;
@@ -339,6 +349,7 @@ body {
 }
 
 .card {
+    font-family: 'Google Sans',"Noto Sans SC", sans-serif;
     background-color: #fff;
     padding: 40px 30px;
     border-radius: 24px; /* Apple Card Radius */
@@ -386,6 +397,7 @@ body {
 }
 
 .song-item {
+    font-family: 'Google Sans',"Noto Sans SC", sans-serif;
     background-color: #F5F5F7; /* Apple 浅灰背景 */
     padding: 24px;
     
@@ -477,17 +489,167 @@ body {
 
 /* Minecraft 服务器卡片 */
 .server-card {
+    font-family: 'Google Sans',"Noto Sans SC", sans-serif;
     background-color: #fff;
-    padding: 40px;
-    border-radius: 24px;
-    margin-bottom: 30px;
+    padding: 48px; /* 更大的内边距 */
+    border-radius: 28px; /* 更圆角 */
+    margin-bottom: 36px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-wrap: nowrap; /* 使用不换行的布局，交叉通过 row-reverse 控制 */
+    gap: 32px; /* 更大的间距 */
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    min-height: 220px;
+}
+
+/* 交叉布局：偶数卡片反向排列（预览图在右侧） */
+.server-card:nth-of-type(even) {
+    flex-direction: row-reverse;
+}
+
+/* 服务器预览图（更大） */
+.server-preview {
+    width: 360px;
+    height: 210px;
+    flex: 0 0 360px; /* 固定宽度，不会被压缩 */
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #F5F5F7, #EFEFF2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative;
+}
+
+.server-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    vertical-align: middle;
+    object-fit: contain;
+}
+
+.server-carousel {
+    position: relative;
+}
+
+.server-carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.server-carousel img.visible {
+    opacity: 1;
+}
+
+
+.server-carousel .carousel-indicators {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.server-carousel .carousel-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.server-carousel .carousel-indicator.active {
+    background: rgba(255,255,255,0.95);
+    transform: scale(1.1);
+}
+
+/* 信息区域占据剩余空间 */
+.server-info {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start; /* 默认左对齐 */
+}
+
+/* 文本对齐与按钮对齐：奇数靠左，偶数靠右，增强交错视觉 */
+.server-card:nth-of-type(odd) .server-info { text-align: left; align-items: flex-start; }
+.server-card:nth-of-type(even) .server-info { text-align: right; align-items: flex-end; }
+
+/* 统一的长条按钮（放在信息区域下方） */
+.btn-join {
+    display: inline-block;
+    width: 340px;
+    max-width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    border-radius: 30px;
+    box-sizing: border-box;
+    background-color: #34C759; /* 保持绿色 */
+    color: #fff;
+    text-decoration: none !important;
+}
+
+/* 悬停样式保持一致 */
+.btn-join:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* 悬停增强 */
+.server-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.10); }
+
+/* 响应式：窄屏下堆叠并居中 */
+@media (max-width: 900px) {
+    .server-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        padding: 28px;
+        min-height: auto;
+    }
+
+    .server-card .server-preview { width: 100%; height: 180px; flex: 0 0 auto; }
+    .server-card .server-info { text-align: left; }
+    .server-card .btn-join { width: 100%; margin: 0; }
+}
+
+/* 强制移动端服务器卡片竖直堆叠（覆盖交叉布局） */
+@media (max-width: 900px) {
+    .server-card, .server-card:nth-of-type(even) {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        flex-wrap: wrap !important;
+    }
+    .server-card .server-info {
+        text-align: left !important;
+        align-items: flex-start !important;
+    }
+    .server-card .btn-join {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        display: block !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .server-preview { height: 140px; }
+    .server-card { padding: 20px; }
 }
 
 .server-card:hover {

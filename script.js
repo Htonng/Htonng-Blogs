@@ -84,11 +84,96 @@ function observeCardsReveal() {
     cards.forEach(card => revealObserver.observe(card));
 }
 
+function initServerCarousels() {
+    const carousels = document.querySelectorAll('.server-carousel');
+    if (!carousels.length) return;
+
+    carousels.forEach(carousel => {
+        const rawImages = carousel.dataset.images || '';
+        const images = rawImages.split('|').map(src => src.trim()).filter(Boolean);
+        if (!images.length) return;
+
+        let currentIndex = 0;
+        let currentImg = document.createElement('img');
+        currentImg.alt = carousel.dataset.alt || '服务器预览';
+        currentImg.src = images[currentIndex];
+        currentImg.className = 'carousel-image visible';
+        currentImg.style.zIndex = '1';
+
+        let nextImg = document.createElement('img');
+        nextImg.alt = carousel.dataset.alt || '服务器预览';
+        nextImg.className = 'carousel-image';
+        nextImg.style.zIndex = '0';
+
+        carousel.appendChild(nextImg);
+        carousel.appendChild(currentImg);
+
+        if (currentImg.complete) {
+            currentImg.classList.add('visible');
+        }
+
+        const indicators = document.createElement('div');
+        indicators.className = 'carousel-indicators';
+        const dots = images.map((_, index) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'carousel-indicator';
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => showSlide(index));
+            indicators.appendChild(dot);
+            return dot;
+        });
+        carousel.appendChild(indicators);
+
+        let slideTimer = setInterval(() => showSlide(currentIndex + 1), 4000);
+
+        function showSlide(index) {
+            const nextIndex = (index + images.length) % images.length;
+            if (nextIndex === currentIndex) return;
+
+            const preload = new Image();
+            preload.onload = () => {
+                nextImg.src = preload.src;
+                nextImg.classList.remove('visible');
+                nextImg.style.zIndex = '2';
+
+                requestAnimationFrame(() => {
+                    nextImg.classList.add('visible');
+                    currentImg.classList.remove('visible');
+                    currentImg.style.zIndex = '1';
+                    nextImg.style.zIndex = '2';
+
+                    [currentImg, nextImg] = [nextImg, currentImg];
+                    updateIndicators(nextIndex);
+                    currentIndex = nextIndex;
+                    resetTimer();
+                });
+            };
+            preload.src = images[nextIndex];
+        }
+
+        function updateIndicators(activeIndex) {
+            dots.forEach((dot, dotIndex) => {
+                dot.classList.toggle('active', dotIndex === activeIndex);
+            });
+        }
+
+        function resetTimer() {
+            clearInterval(slideTimer);
+            slideTimer = setInterval(() => showSlide(currentIndex + 1), 4000);
+        }
+
+        carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
+        carousel.addEventListener('mouseleave', () => resetTimer());
+    });
+}
+
 window.addEventListener('load', () => {
     initTyping();
     typeWriter();
     observeHeroAnimation();
     observeCardsReveal();
+    initServerCarousels();
 });
 
 // 平滑滚动 (兼容旧版浏览器)
