@@ -168,7 +168,7 @@ body {
     left: 0; /* 固定左对齐，始终贴着网页左侧 */
     font-size: 12rem; /* 巨大字体 */
     font-weight: 900;
-    color: #f0f0f0; /* 极浅的灰色，几乎透明但可见 */
+    color: #f5f5f5; /* 极浅的灰色，几乎透明但可见 */
     line-height: 0.9;
     pointer-events: none; /* 防止阻挡点击 */
     white-space: nowrap;
