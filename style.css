@@ -492,7 +492,7 @@ body {
     font-family: 'Google Sans',"Noto Sans SC", sans-serif;
     background-color: #fff;
     padding: 48px; /* 更大的内边距 */
-    border-radius: 28px; /* 更圆角 */
+    border-radius: 30px; /* 更圆角 */
     margin-bottom: 36px;
     display: flex;
     justify-content: space-between;
@@ -514,7 +514,7 @@ body {
     width: 360px;
     height: 210px;
     flex: 0 0 360px; /* 固定宽度，不会被压缩 */
-    border-radius: 16px;
+    border-radius: 18px;
     overflow: hidden;
     background: linear-gradient(180deg, #F5F5F7, #EFEFF2);
     display: flex;
@@ -560,6 +560,7 @@ body {
     transform: translateX(-50%);
     display: flex;
     gap: 8px;
+    z-index: 5;
 }
 
 .server-carousel .carousel-indicator {
