@@ -3,6 +3,14 @@
    Colors: #F5F5F7 (bg), #FFFFFF (card), #1D1D1F (text)
 */
 
+@font-face {
+    font-family: 'Google Sans';
+    src: url('assets/Font/GoogleSans.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* 全局重置与字体 */
 * {
     margin: 0;
@@ -290,6 +298,7 @@ body {
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     font-size: 16px;
     z-index: 10; /* 确保按钮在背景字之上 */
@@ -388,12 +397,51 @@ body {
     border-radius: 20px;
 }
 
+#blog.bg-dark {
+    background-color: transparent !important;
+    border-radius: 0;
+}
+
 .music-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
     max-width: 800px; /* 限制最大宽度，更像手机 APP 界面 */
     margin: 0 auto;
+}
+
+.blog-card {
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    max-width: 840px;
+    margin: 0 auto;
+    box-shadow: none;
+    border: none;
+    display: grid;
+    gap: 18px;
+    text-align: left;
+}
+
+.blog-card p {
+    color: #424245;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.blog-card p:first-child {
+    font-size: 1.05rem;
+    color: #1D1D1F;
+    font-weight: 600;
+}
+
+.blog-card .btn-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.blog-card .btn {
+    min-width: 260px;
 }
 
 .song-item {
@@ -504,11 +552,6 @@ body {
     min-height: 220px;
 }
 
-/* 交叉布局：偶数卡片反向排列（预览图在右侧） */
-.server-card:nth-of-type(even) {
-    flex-direction: row-reverse;
-}
-
 /* 服务器预览图（更大） */
 .server-preview {
     width: 360px;
@@ -587,9 +630,8 @@ body {
     align-items: flex-start; /* 默认左对齐 */
 }
 
-/* 文本对齐与按钮对齐：奇数靠左，偶数靠右，增强交错视觉 */
-.server-card:nth-of-type(odd) .server-info { text-align: left; align-items: flex-start; }
-.server-card:nth-of-type(even) .server-info { text-align: right; align-items: flex-end; }
+/* 文本对齐与按钮对齐 */
+.server-card .server-info { text-align: left; align-items: flex-start; }
 
 /* 统一的长条按钮（放在信息区域下方） */
 .btn-join {
