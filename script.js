@@ -339,12 +339,9 @@ function initThemeToggle() {
     const html = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // 检测系统偏好
-    const savedTheme = localStorage.getItem('theme');
-
-    // 仅切换 HTML 属性与图标，不保存到 localStorage
-    function setTheme(theme, save) {
-        if (theme === 'dark') {
+    // 始终跟随系统主题
+    function setTheme(isDark) {
+        if (isDark) {
             html.setAttribute('data-theme', 'dark');
             if (icon) {
                 icon.className = 'fas fa-sun';
@@ -359,31 +356,19 @@ function initThemeToggle() {
             toggleBtn.setAttribute('aria-label', '切换深色模式');
             toggleBtn.setAttribute('title', '切换深色模式');
         }
-        if (save) {
-            localStorage.setItem('theme', theme);
-        } else {
-            localStorage.removeItem('theme');
-        }
     }
 
-    // 优先级：已保存的主题 > 系统偏好
-    if (savedTheme) {
-        setTheme(savedTheme, true);
-    } else {
-        setTheme(mediaQuery.matches ? 'dark' : 'light', false);
-    }
+    // 初始应用系统主题
+    setTheme(mediaQuery.matches);
 
-    // 监听系统主题变化（仅当用户未手动保存主题时跟随）
+    // 监听系统主题变化
     mediaQuery.addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            setTheme(e.matches ? 'dark' : 'light', false);
-        }
+        setTheme(e.matches);
     });
 
     toggleBtn.addEventListener('click', () => {
         const isDark = html.getAttribute('data-theme') === 'dark';
-        // 用户手动切换时保存偏好
-        setTheme(isDark ? 'light' : 'dark', true);
+        setTheme(!isDark);
         // 按钮旋转反馈
         toggleBtn.style.transform = 'rotate(360deg)';
         setTimeout(() => { toggleBtn.style.transform = ''; }, 400);
