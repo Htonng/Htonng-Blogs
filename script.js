@@ -218,7 +218,7 @@ async function loadLatestBlogPosts() {
         const dates = doc.querySelectorAll('.meta-info time');
 
         let postsHTML = '';
-        const maxPosts = Math.min(articles.length, 4);
+        const maxPosts = Math.min(articles.length, 3);
 
         for (let i = 0; i < maxPosts; i++) {
             const link = articles[i];
