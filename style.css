@@ -1317,7 +1317,7 @@ body {
 
     /* nav-actions 在移动端靠右显示 */
     .nav-actions {
-        gap: 2px;
+        gap: 12px;
     }
 
     /* Mobile animated menu: use max-height to animate open/close */

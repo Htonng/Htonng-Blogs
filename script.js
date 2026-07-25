@@ -337,15 +337,13 @@ function initThemeToggle() {
 
     const icon = toggleBtn.querySelector('i');
     const html = document.documentElement;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     // 检测系统偏好
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedTheme = localStorage.getItem('theme');
 
-    // 优先级：已保存的主题 > 系统偏好
-    let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-
-    function applyTheme(theme) {
+    // 仅切换 HTML 属性与图标，不保存到 localStorage
+    function setTheme(theme, save) {
         if (theme === 'dark') {
             html.setAttribute('data-theme', 'dark');
             if (icon) {
@@ -361,22 +359,31 @@ function initThemeToggle() {
             toggleBtn.setAttribute('aria-label', '切换深色模式');
             toggleBtn.setAttribute('title', '切换深色模式');
         }
-        localStorage.setItem('theme', theme);
+        if (save) {
+            localStorage.setItem('theme', theme);
+        } else {
+            localStorage.removeItem('theme');
+        }
     }
 
-    // 应用初始主题
-    applyTheme(currentTheme);
+    // 优先级：已保存的主题 > 系统偏好
+    if (savedTheme) {
+        setTheme(savedTheme, true);
+    } else {
+        setTheme(mediaQuery.matches ? 'dark' : 'light', false);
+    }
 
-    // 监听系统主题变化
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // 监听系统主题变化（仅当用户未手动保存主题时跟随）
+    mediaQuery.addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
-            applyTheme(e.matches ? 'dark' : 'light');
+            setTheme(e.matches ? 'dark' : 'light', false);
         }
     });
 
     toggleBtn.addEventListener('click', () => {
         const isDark = html.getAttribute('data-theme') === 'dark';
-        applyTheme(isDark ? 'light' : 'dark');
+        // 用户手动切换时保存偏好
+        setTheme(isDark ? 'light' : 'dark', true);
         // 按钮旋转反馈
         toggleBtn.style.transform = 'rotate(360deg)';
         setTimeout(() => { toggleBtn.style.transform = ''; }, 400);
