@@ -61,7 +61,7 @@ function observeHeroAnimation() {
 }
 
 function observeCardsReveal() {
-    const cardSelector = '.card, .song-item, .server-card';
+    const cardSelector = '.card, .song-item, .server-card, .project-card, .blog-post-item, .contact-item';
     const cards = document.querySelectorAll(cardSelector);
     if (!cards.length || !('IntersectionObserver' in window)) {
         cards.forEach(card => card.classList.add('visible'));
@@ -168,12 +168,140 @@ function initServerCarousels() {
     });
 }
 
+// ===== 滚动进度条 =====
+function initScrollProgress() {
+    const progressBar = document.getElementById('scroll-progress');
+    if (!progressBar) return;
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + '%';
+    }, { passive: true });
+}
+
+// ===== 返回顶部按钮 =====
+function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// ===== 最新博客文章动态加载 =====
+async function loadLatestBlogPosts() {
+    const container = document.getElementById('latest-posts');
+    if (!container) return;
+
+    try {
+        // 尝试获取博客首页的文章列表
+        const response = await fetch('blog/index.html');
+        if (!response.ok) throw new Error('无法获取博客数据');
+
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // 提取文章列表
+        const articles = doc.querySelectorAll('.article-title');
+        const dates = doc.querySelectorAll('.meta-info time');
+
+        let postsHTML = '';
+        const maxPosts = Math.min(articles.length, 4);
+
+        for (let i = 0; i < maxPosts; i++) {
+            const link = articles[i];
+            const title = link.textContent.trim();
+            let href = link.getAttribute('href');
+            const date = dates[i] ? dates[i].getAttribute('datetime') || dates[i].textContent.trim() : '';
+
+            // 将绝对路径转为相对路径（移除 /Htonng-Blogs/blog/ 前缀）
+            if (href.startsWith('/')) {
+                const parts = href.split('/').filter(Boolean);
+                // 移除第一个目录段（如 Htonng-Blogs）
+                if (parts.length > 1) parts.shift();
+                href = parts.join('/');
+                if (!href.endsWith('/')) href += '/';
+            }
+
+            const displayDate = date ? date.split('T')[0] : '';
+
+            postsHTML += `
+                <a href="${href}" class="blog-post-item reveal-card">
+                    <time class="post-date">${displayDate}</time>
+                    <h4 class="post-title">${title}</h4>
+                    <span class="post-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            `;
+        }
+
+        if (postsHTML) {
+            container.innerHTML = postsHTML;
+            // 重新触发滚动观察
+            observeCardsReveal();
+        } else {
+            container.innerHTML = '<p class="no-posts">暂无文章，敬请期待</p>';
+        }
+    } catch (e) {
+        console.warn('博客文章加载失败，使用静态备用数据:', e.message);
+        // 备用：直接使用已知的博客文章
+        container.innerHTML = `
+            <a href="blog/2026/07/24/科学上网和绕过工具推荐/" class="blog-post-item reveal-card">
+                <time class="post-date">2026-07-24</time>
+                <h4 class="post-title">科学上网和绕过工具推荐</h4>
+                <span class="post-arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="blog/2026/07/23/我的第一个文章/" class="blog-post-item reveal-card">
+                <time class="post-date">2026-07-23</time>
+                <h4 class="post-title">我的第一个文章</h4>
+                <span class="post-arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+        `;
+        // 重新触发滚动观察（延迟让 DOM 更新）
+        setTimeout(() => observeCardsReveal(), 100);
+    }
+}
+
+// ===== 项目卡片特殊悬浮效果 =====
+function initProjectCards() {
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const icon = this.querySelector('.project-icon i');
+            if (icon) {
+                icon.style.transform = 'scale(1.2) rotate(8deg)';
+            }
+        });
+        card.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.project-icon i');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+}
+
 window.addEventListener('load', () => {
     initTyping();
     typeWriter();
     observeHeroAnimation();
     observeCardsReveal();
     initServerCarousels();
+    initScrollProgress();
+    initBackToTop();
+    loadLatestBlogPosts();
+    initProjectCards();
+    initThemeToggle();
 });
 
 // 平滑滚动 (兼容旧版浏览器)
@@ -201,6 +329,61 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 }
     });
 });
+
+// ===== 深色模式切换 =====
+function initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    const icon = toggleBtn.querySelector('i');
+    const html = document.documentElement;
+
+    // 检测系统偏好
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+
+    // 优先级：已保存的主题 > 系统偏好
+    let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            if (icon) {
+                icon.className = 'fas fa-sun';
+            }
+            toggleBtn.setAttribute('aria-label', '切换浅色模式');
+            toggleBtn.setAttribute('title', '切换浅色模式');
+        } else {
+            html.removeAttribute('data-theme');
+            if (icon) {
+                icon.className = 'fas fa-moon';
+            }
+            toggleBtn.setAttribute('aria-label', '切换深色模式');
+            toggleBtn.setAttribute('title', '切换深色模式');
+        }
+        localStorage.setItem('theme', theme);
+    }
+
+    // 应用初始主题
+    applyTheme(currentTheme);
+
+    // 监听系统主题变化
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+
+    toggleBtn.addEventListener('click', () => {
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        applyTheme(isDark ? 'light' : 'dark');
+        // 按钮旋转反馈
+        toggleBtn.style.transform = 'rotate(360deg)';
+        setTimeout(() => { toggleBtn.style.transform = ''; }, 400);
+        // 如果移动端菜单打开了，点击深色模式按钮时自动收起
+        closeMobileNav();
+    });
+}
 
 // Mobile nav toggle
 const navToggle = document.querySelector('.nav-toggle');

@@ -16,20 +16,30 @@
     
 </head>
 <body>
+    <!-- 滚动进度条 -->
+    <div id="scroll-progress" role="progressbar" aria-label="页面阅读进度"></div>
+
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="logo">&lt;Htonng /&gt;</div>
         <!-- Mobile menu toggle -->
-        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><i class="fas fa-bars"></i></button>
         <ul class="nav-links">
             <li><a href="#home">首页</a></li>
             <li><a href="#about">关于我</a></li>
+            <li><a href="#projects">项目</a></li>
             <li><a href="#music">音乐创作</a></li>
             <li><a href="#servers">Minecraft服务器</a></li>
-            <li><a href="blog/index.html">博客</a></li>            
+            <li><a href="blog/index.html">博客</a></li>
             <!-- 修改为 QQ 群链接 -->
             <li><a href="https://qm.qq.com/q/w76rIvt0Pu" target="_blank" class="btn-contact"><i class="fas fa-user-plus"></i> 加入社群</a></li>
         </ul>
+        <!-- 右侧操作区：深色模式 + 汉堡菜单 -->
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="切换深色模式" title="切换深色模式">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        </div>
     </nav>
 
     <!-- 遮罩（移动菜单打开时显示） -->
@@ -37,6 +47,9 @@
 
     <!-- Hero 区域 - 重新排版版 -->
     <header id="home" class="hero">
+        <!-- 装饰光晕 -->
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-glow-2" aria-hidden="true"></div>
         <!-- 将背景大字放到 hero 容器下，使其不随 .hero-content 平移 -->
         <div class="bg-words">
             <span class="word big-word" style="--i:3;">HARDWARE</span>
@@ -57,7 +70,7 @@
 
             <!-- 右侧：动态背景文字与行动呼吁 -->
             <div class="text-section">
-                <h1 class="typing-text">Hi. I am Htonng</h1>
+                <h1 class="typing-text">你好，我是 Htonng</h1>
                 <p class="hero-desc">
                     17 岁高中生，喜欢捣鼓电脑软硬件，在 FL Studio 作曲<br>
                     在 Minecraft 服务器构建自动化世界。
@@ -80,21 +93,95 @@
                 <i class="fab fa-linux"></i>
                 <h3>Linux & System</h3>
                 <p>热衷于探索各种 Linux 发行版，喜欢捣鼓电脑硬件，享受命令行带来的掌控感。</p>
+                <div class="skill-bar"><div class="skill-fill" style="width: 75%;" data-label="熟练"></div></div>
             </div>
             <div class="card skill-card">
                 <i class="fas fa-code"></i>
                 <h3>Programming</h3>
                 <p>正在探索多种编程语言。从 Python 到 Web 开发，代码是我表达逻辑的语言。</p>
+                <div class="skill-bar"><div class="skill-fill" style="width: 60%;" data-label="进阶中"></div></div>
             </div>
             <div class="card skill-card">
                 <i class="fas fa-cube"></i>
                 <h3>Minecraft Server</h3>
                 <p>我的世界服务器管理员。目前运营着生电和机械动力服，欢迎来我的服务器做建筑或红石。</p>
+                <div class="skill-bar"><div class="skill-fill" style="width: 85%;" data-label="精通"></div></div>
             </div>
             <div class="card skill-card">
                 <i class="fas fa-computer"></i>
                 <h3>Hardware</h3>
                 <p>热衷于探索各种硬件设备，喜欢拆解和组装电脑，享受从零开始组装硬件的乐趣。</p>
+                <div class="skill-bar"><div class="skill-fill" style="width: 70%;" data-label="擅长"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目作品展示 -->
+    <section id="projects" class="container section">
+        <h2><i class="fas fa-rocket"></i> 项目作品</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-blog"></i>
+                </div>
+                <div class="project-body">
+                    <h3>个人博客系统</h3>
+                    <p>基于 Hexo 搭建的静态博客，使用 Vivia 主题，记录技术教程与生活随笔。</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Hexo</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">EJS</span>
+                    </div>
+                    <a href="blog/index.html" class="project-link">前往浏览 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <div class="project-body">
+                    <h3>Minecraft 服务器集群</h3>
+                    <p>运营生电科技服与机械动力模组服，构建全自动红石工厂与机械传动流水线。</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Spigot</span>
+                        <span class="tech-tag">Create Mod</span>
+                        <span class="tech-tag">Redstone</span>
+                    </div>
+                    <a href="#servers" class="project-link">了解详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <div class="project-body">
+                    <h3>FL Studio 音乐创作</h3>
+                    <p>在 FL Studio 中制作 Lo-Fi、J-Pop 与交响乐，用旋律记录灵感与情绪。</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">FL Studio</span>
+                        <span class="tech-tag">Lo-Fi</span>
+                        <span class="tech-tag">Orchestral</span>
+                    </div>
+                    <a href="#music" class="project-link">试听作品 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="project-body">
+                    <h3>个人主页</h3>
+                    <p>采用 Apple 极简风格设计，包含打字机动画、轮播图、滚动渐入等交互效果。</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">IntersectionObserver</span>
+                    </div>
+                    <a href="https://github.com/Htonng" target="_blank" class="project-link">查看源码 <i class="fab fa-github"></i></a>
+                </div>
             </div>
         </div>
     </section>
@@ -159,26 +246,85 @@
         </div>
     </section>
 
-    <!-- 博客页（简介） -->
+    <!-- 博客页（简介 + 最新文章） -->
     <section id="blog" class="container section bg-dark">
         <h2><i class="fas fa-blog"></i> 欢迎来到我的博客</h2>
         <div class="blog-card">
             <p>在这里分享最新项目、服务器运营日志、红石与机械动力创作记录，以及音乐与硬件探索心得。</p>
             <p>计划发布教程、创意灵感和实用技巧，内容会持续更新 — 如果感兴趣，欢迎点击下方前往完整博客页面阅读与留言。</p>
+        </div>
+
+        <!-- 最新文章动态加载区域 -->
+        <div class="latest-posts-section">
+            <h3 class="section-subtitle"><i class="fas fa-newspaper"></i> 最新文章</h3>
+            <div id="latest-posts" class="latest-posts-list">
+                <!-- 由 JavaScript 动态加载 -->
+                <div class="loading-posts">
+                    <i class="fas fa-spinner fa-spin"></i> 加载中...
+                </div>
+            </div>
             <div class="btn-container">
-                <a href="blog/index.html" class="btn btn-primary" ><i class="fas fa-book-open" aria-hidden="true"></i> 前往完整博客<i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                <a href="blog/index.html" class="btn btn-primary"><i class="fas fa-book-open" aria-hidden="true"></i> 查看全部文章 <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 -->
+    <section id="contact" class="container section">
+        <h2><i class="fas fa-paper-plane"></i> 与我联系</h2>
+        <div class="contact-content">
+            <p class="contact-intro">如果你对我的项目感兴趣，或者想一起玩 Minecraft，欢迎通过以下方式找到我：</p>
+            <div class="contact-grid">
+                <a href="mailto:xuanfish233@gmail.com" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span class="contact-label">电子邮箱</span>
+                    <span class="contact-detail">xuanfish233@gmail.com</span>
+                </a>
+                <a href="https://github.com/Htonng" target="_blank" class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <span class="contact-label">GitHub</span>
+                    <span class="contact-detail">@Htonng</span>
+                </a>
+                <a href="https://space.bilibili.com/634850101" target="_blank" class="contact-item">
+                    <i class="fab fa-bilibili"></i>
+                    <span class="contact-label">Bilibili</span>
+                    <span class="contact-detail">Htonng</span>
+                </a>
+                <a href="https://qm.qq.com/q/w76rIvt0Pu" target="_blank" class="contact-item">
+                    <i class="fab fa-qq"></i>
+                    <span class="contact-label">QQ 群</span>
+                    <span class="contact-detail">826673617</span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
     <footer class="footer">
-        <p>&copy; 2026 Htonng. All Rights Reserved.</p>
-        <div class="socials">
-            <a href="https://github.com/Htonng"><i class="fab fa-github"></i></a>
-            <a href="https://space.bilibili.com/634850101"><i class="fab fa-bilibili"></i></a>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-logo">&lt;Htonng /&gt;</span>
+                <p>Developer · Composer · Tinkerer</p>
+            </div>
+            <div class="footer-links">
+                <a href="#home">首页</a>
+                <a href="#about">关于</a>
+                <a href="#projects">项目</a>
+                <a href="blog/index.html">博客</a>
+            </div>
+            <div class="socials">
+                <a href="https://github.com/Htonng" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://space.bilibili.com/634850101" target="_blank" aria-label="Bilibili"><i class="fab fa-bilibili"></i></a>
+                <a href="https://qm.qq.com/q/w76rIvt0Pu" target="_blank" aria-label="QQ群"><i class="fab fa-qq"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Htonng. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" aria-label="返回顶部" title="返回顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- 脚本引用 -->
     <script src="script.js"></script>
